@@ -21,7 +21,7 @@ int main()
 {
 	systemInit();			/*底层硬件初始化*/	
 
-	xTaskCreate(startTask, "START_TASK", 300, NULL, 2, &startTaskHandle);	/*创建起始任务*/
+	xTaskCreate(startTask, "START_TASK", 301, NULL, 2, &startTaskHandle);	/*创建起始任务*/
 
 	vTaskStartScheduler();	/*开启任务调度*/
 
@@ -37,7 +37,7 @@ void startTask(void *arg)
 	
 	xTaskCreate(sensorsTask, "SENSORS", 450, NULL, 5, NULL);			/*创建传感器处理任务*/
 	
-	xTaskCreate(ppmTask, "PPM", 150, NULL, 4, NULL);					/*创建遥控器PPM信号接收任务*/
+	//xTaskCreate(ppmTask, "PPM", 150, NULL, 4, NULL);					/*创建遥控器PPM信号接收任务*/
 	
 	xTaskCreate(rxTask, "RX_TASK", 150, NULL, 4, NULL);					/*创建遥控器处理任务任务*/
 	
@@ -79,7 +79,7 @@ void vApplicationIdleHook( void )
 
 
 
-
+//this my fist test code
 
 
 
