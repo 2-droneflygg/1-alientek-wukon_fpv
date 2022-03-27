@@ -143,15 +143,15 @@ void commanderGetSetpoint(const state_t *state, setpoint_t *setpoint)
 		rcCommand[YAW] = 0;
 	}
 	
-	if(FLIGHT_MODE(HEADFREE_MODE))//无头模式
-	{
-		float yawRad = degreesToRadians(-state->attitude.yaw);
-		float cosy = cosf(yawRad);
-		float siny = sinf(yawRad);
-		int16_t rcCommand_PITCH = rcCommand[PITCH]*cosy + rcCommand[ROLL]*siny;
-		rcCommand[ROLL] = rcCommand[ROLL]*cosy - rcCommand[PITCH]*siny;
-		rcCommand[PITCH] = rcCommand_PITCH;
-	}
+	// if(FLIGHT_MODE(HEADFREE_MODE))//无头模式
+	// {
+	// 	float yawRad = degreesToRadians(-state->attitude.yaw);
+	// 	float cosy = cosf(yawRad);
+	// 	float siny = sinf(yawRad);
+	// 	int16_t rcCommand_PITCH = rcCommand[PITCH]*cosy + rcCommand[ROLL]*siny;
+	// 	rcCommand[ROLL] = rcCommand[ROLL]*cosy - rcCommand[PITCH]*siny;
+	// 	rcCommand[PITCH] = rcCommand_PITCH;
+	// }
 
 	resetSetpointMode(setpoint);//复位所有模式
 	
@@ -166,7 +166,7 @@ void commanderGetSetpoint(const state_t *state, setpoint_t *setpoint)
 		setpoint->attitudeRate.pitch = rcCommandToRate(rcCommand[PITCH], MAX_RATE_PITCH);
 		setpoint->attitudeRate.yaw = rcCommandToRate(rcCommand[YAW], MAX_RATE_YAW);
 	}
-	else if (FLIGHT_MODE(ANGLE_MODE))
+	else if (FLIGHT_MODE(ANGLE_MODE))//目前主要看这个模式
 	{
 		setpoint->mode.yaw = modeVelocity;
 		

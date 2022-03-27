@@ -54,7 +54,7 @@ uint32_t disableFlightMode(flightModeFlags_e mask)
 //校准进行中
 bool isCalibrating(void)
 {
-	if (!baroIsCalibrationComplete()) 
+	if (!baroIsCalibrationComplete())  // 校准成功 就是不返回1 
 	{
 		return true;
 	}
@@ -74,13 +74,20 @@ bool isCalibrating(void)
 		return true;
 	}
 
-    return false;
+    return false; // 全部校准完成就是返回0
 }
 
+
+// ARMING_DISABLED_NOT_LEVEL                       = (1 << 3), // 如果是1 就是不能解锁  原因是不水平
+// ARMING_DISABLED_SENSORS_CALIBRATING             = (1 << 4), // 如果是1 就是不能解锁  原因是传感器没有校准
+// ARMING_DISABLED_COMPASS_NOT_CALIBRATED          = (1 << 5), // 如果是1 就是不能解锁  原因是罗盘没有校准 
+// ARMING_DISABLED_ACCELEROMETER_NOT_CALIBRATED    = (1 << 6), // 如果是1 就是不能解锁  原因是加速度计没有校准
+// ARMING_DISABLED_FLASH_WRITING                   = (1 << 8), // 如果是1 就是不能解锁  原因是flash还在写
 //更新解锁标志位状态
+//根据各个关键的设备是否正常  来决定是否要清除相应的标志位
 void updateArmingStatus(void)
 {
-    if (ARMING_FLAG(ARMED)) 
+    if (ARMING_FLAG(ARMED)) //如果已经解锁了 
 	{
         LED0_ON;
     } 
@@ -88,19 +95,19 @@ void updateArmingStatus(void)
 	{
 		//传感器校准中
 		static bool calibratingFinishedBeep = false;
-		if (isCalibrating()) 
+		if (isCalibrating())  //
 		{
-			ENABLE_ARMING_FLAG(ARMING_DISABLED_SENSORS_CALIBRATING);
+			ENABLE_ARMING_FLAG(ARMING_DISABLED_SENSORS_CALIBRATING); //表示还没有通过校准
 			calibratingFinishedBeep = false;
 		}
-		else
+		else //全部校准成功 就是这里
 		{
-			DISABLE_ARMING_FLAG(ARMING_DISABLED_SENSORS_CALIBRATING);
+			DISABLE_ARMING_FLAG(ARMING_DISABLED_SENSORS_CALIBRATING); //
 
 			if (!calibratingFinishedBeep) 
 			{
 				calibratingFinishedBeep = true;
-				beeper(BEEPER_RUNTIME_CALIBRATION_DONE);
+				beeper(BEEPER_RUNTIME_CALIBRATION_DONE); //校准成功
 			}
 		}
 
@@ -145,13 +152,13 @@ void updateArmingStatus(void)
 		}
 		
 		//刷新LED灯状态
-        if (!isArmingDisabled()) 
+        if (!isArmingDisabled()) // 全部都是正常了
 		{
-            warningLedFlash();
+            warningLedFlash(); //闪烁表示可以解锁了
         } 
 		else 
 		{
-            warningLedON();
+            warningLedON(); 
         }
 		
         warningLedUpdate();
@@ -163,7 +170,7 @@ void mwDisarm(void)
 {
     if (ARMING_FLAG(ARMED)) 
 	{
-        DISABLE_ARMING_FLAG(ARMED);
+        DISABLE_ARMING_FLAG(ARMED); //上锁
         beeper(BEEPER_DISARMING); 
     }
 }
@@ -173,14 +180,14 @@ void mwArm(void)
 {
     updateArmingStatus();
 
-    if (!isArmingDisabled()) 
+    if (!isArmingDisabled())  // 只要有一个是 1 ，就是1 ，所以需要全部都是 0 
 	{
-        if (ARMING_FLAG(ARMED)) 
+        if (ARMING_FLAG(ARMED))  //查询是否解锁 
 		{
             return;
         }
-		ENABLE_ARMING_FLAG(ARMED);
-		ENABLE_ARMING_FLAG(WAS_EVER_ARMED);
+		ENABLE_ARMING_FLAG(ARMED); // 真正的解锁
+		ENABLE_ARMING_FLAG(WAS_EVER_ARMED); // 之前没有解锁过
 		
 		stateControlResetYawHolding();//复位航向角锁定值
         beeper(BEEPER_ARMING);

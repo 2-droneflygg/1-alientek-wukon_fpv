@@ -30,20 +30,20 @@ typedef enum
 
 typedef enum 
 {
-    ROL_LO = (1 << (2 * ROLL)),
-    ROL_CE = (3 << (2 * ROLL)),
-    ROL_HI = (2 << (2 * ROLL)),
+    ROL_LO = (1 << (2 * ROLL)), // 0000 0001   //表示 此通道 值太小
+    ROL_CE = (3 << (2 * ROLL)), // 0000 0011   //表示正常
+    ROL_HI = (2 << (2 * ROLL)), // 0000 0010   //表示 此通道 值太大
 
-    PIT_LO = (1 << (2 * PITCH)),
-    PIT_CE = (3 << (2 * PITCH)),
-    PIT_HI = (2 << (2 * PITCH)),
+    PIT_LO = (1 << (2 * PITCH)),   // 0000 0100
+    PIT_CE = (3 << (2 * PITCH)),   // 0000 1100  //表示正常
+    PIT_HI = (2 << (2 * PITCH)),   // 0000 1000
 
-    THR_LO = (1 << (2 * THROTTLE)),
-    THR_CE = (3 << (2 * THROTTLE)),
-    THR_HI = (2 << (2 * THROTTLE)),
+    THR_LO = (1 << (2 * THROTTLE)), // 0001
+    THR_CE = (3 << (2 * THROTTLE)), // 0011  //表示正常
+    THR_HI = (2 << (2 * THROTTLE)), // 0010
 	
 	YAW_LO = (1 << (2 * YAW)),
-    YAW_CE = (3 << (2 * YAW)),
+    YAW_CE = (3 << (2 * YAW)), //表示正常
     YAW_HI = (2 << (2 * YAW)),
 } stickPositions_e;
 

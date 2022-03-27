@@ -62,7 +62,7 @@ void stabilizerTask(void* param)
 		//获取传感器数据
 		if (RATE_DO_EXECUTE(MAIN_LOOP_RATE, tick))
 		{
-			sensorsAcquire(&sensorData, tick);				
+			sensorsAcquire(&sensorData, tick);	//对于已经确定大小的数据包  直接把地址放进去			
 		}
 		
 		//四元数和欧拉角计算
@@ -80,7 +80,7 @@ void stabilizerTask(void* param)
 		//目标姿态和飞行模式设定	
 		if (RATE_DO_EXECUTE(MAIN_LOOP_RATE, tick))
 		{
-			commanderGetSetpoint(&state, &setpoint);
+			commanderGetSetpoint(&state, &setpoint);// 根据遥控器的模式 得到目标的姿态
 			updateArmingStatus();
 		}
 		

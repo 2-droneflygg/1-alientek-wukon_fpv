@@ -38,19 +38,19 @@ static void updateRcStickPositions(void)
 {
 	stickPositions_e tmp = (stickPositions_e)0;
 	
-	tmp |= ((rcData[ROLL] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (ROLL * 2);
-	tmp |= ((rcData[ROLL] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (ROLL * 2);
+	tmp |= ((rcData[ROLL] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (ROLL * 2); //移动0位  如果
+	tmp |= ((rcData[ROLL] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (ROLL * 2); //移动0位
 
-	tmp |= ((rcData[PITCH] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (PITCH * 2);
-	tmp |= ((rcData[PITCH] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (PITCH * 2);
+	tmp |= ((rcData[PITCH] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (PITCH * 2); //移动2位
+	tmp |= ((rcData[PITCH] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (PITCH * 2); //移动2位
 
-	tmp |= ((rcData[THROTTLE] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (THROTTLE * 2);
-	tmp |= ((rcData[THROTTLE] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (THROTTLE * 2);
+	tmp |= ((rcData[THROTTLE] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (THROTTLE * 2); //移动4位
+	tmp |= ((rcData[THROTTLE] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (THROTTLE * 2); //移动4位
 
-	tmp |= ((rcData[YAW] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (YAW * 2);
-	tmp |= ((rcData[YAW] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (YAW * 2);
+	tmp |= ((rcData[YAW] > RC_COMMANDER_MINCHECK) ? 0x02 : 0x00) << (YAW * 2); //移动6位
+	tmp |= ((rcData[YAW] < RC_COMMANDER_MAXCHECK) ? 0x01 : 0x00) << (YAW * 2); //移动6位
 	
-    rcStickPositions = tmp;
+    rcStickPositions = tmp; //如果全部正常  那就全部是1 
 }
 
 //处理遥杆位置和对应命令
@@ -72,8 +72,10 @@ void processRcStickPositions(void)
 		}
 	}
 	else
+	{
 		rcDelayCommand = 0;
-	
+	}
+		
 	rcSticks = stTmp;
 	
 	if (rcDelayCommand != 20) return;

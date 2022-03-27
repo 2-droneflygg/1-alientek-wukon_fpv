@@ -19,15 +19,15 @@
 //解锁标志位
 typedef enum 
 {
-    ARMED                                           = (1 << 1),
-    WAS_EVER_ARMED                                  = (1 << 2),
-    ARMING_DISABLED_NOT_LEVEL                       = (1 << 3),
-    ARMING_DISABLED_SENSORS_CALIBRATING             = (1 << 4),
-    ARMING_DISABLED_COMPASS_NOT_CALIBRATED          = (1 << 5),
-    ARMING_DISABLED_ACCELEROMETER_NOT_CALIBRATED    = (1 << 6),
-    ARMING_DISABLED_HARDWARE_FAILURE                = (1 << 7),
-	ARMING_DISABLED_FLASH_WRITING                   = (1 << 8),
-	ARMING_DISABLED_PID_BYPASS			            = (1 << 9),
+    ARMED                                           = (1 << 1), // 如果是1 就是解锁了
+    WAS_EVER_ARMED                                  = (1 << 2), 
+    ARMING_DISABLED_NOT_LEVEL                       = (1 << 3), // 如果是1 就是不能解锁  原因是不水平
+    ARMING_DISABLED_SENSORS_CALIBRATING             = (1 << 4), // 如果是1 就是不能解锁  原因是传感器没有校准
+    ARMING_DISABLED_COMPASS_NOT_CALIBRATED          = (1 << 5), // 如果是1 就是不能解锁  原因是罗盘没有校准 
+    ARMING_DISABLED_ACCELEROMETER_NOT_CALIBRATED    = (1 << 6), // 如果是1 就是不能解锁  原因是加速度计没有校准
+    ARMING_DISABLED_HARDWARE_FAILURE                = (1 << 7), // 如果是1 就是不能解锁  原因是硬件失败
+	ARMING_DISABLED_FLASH_WRITING                   = (1 << 8), // 如果是1 就是不能解锁  原因是flash还在写
+	ARMING_DISABLED_PID_BYPASS			            = (1 << 9), // 如果是1 就是不能解锁  原始是pid被取消了
 	
     ARMING_DISABLED_ALL_FLAGS                       = (ARMING_DISABLED_NOT_LEVEL | ARMING_DISABLED_SENSORS_CALIBRATING | ARMING_DISABLED_COMPASS_NOT_CALIBRATED | 
                                                        ARMING_DISABLED_ACCELEROMETER_NOT_CALIBRATED | ARMING_DISABLED_HARDWARE_FAILURE | ARMING_DISABLED_FLASH_WRITING |
@@ -45,14 +45,14 @@ extern uint32_t armingFlags;
 //飞行模式标志位
 typedef enum 
 {
-	ANGLE_MODE        = (1 << 0),
-	ACRO_MODE         = (1 << 1),
-	HEADFREE_MODE     = (1 << 2),
-	NAV_ALTHOLD_MODE  = (1 << 3),
+	ANGLE_MODE        = (1 << 0), //自稳模式
+	ACRO_MODE         = (1 << 1), //手动模式
+	HEADFREE_MODE     = (1 << 2), //无头模式
+	NAV_ALTHOLD_MODE  = (1 << 3), //定高模式                 
 	NAV_RTH_MODE      = (1 << 4),
 	NAV_POSHOLD_MODE  = (1 << 5),
-	NAV_LAUNCH_MODE   = (1 << 7),
-	FAILSAFE_MODE     = (1 << 8),
+	NAV_LAUNCH_MODE   = (1 << 7),  
+	FAILSAFE_MODE     = (1 << 8),  //失控保护模式
 	BEEPER_ON_MODE    = (1 << 9),//蜂鸣器常开，寻机模式。
 } flightModeFlags_e;
 extern uint32_t flightModeFlags;

@@ -132,60 +132,60 @@ static void imuMahonyAHRSupdate(float gx, float gy, float gz,
     const float spin_rate_sq = sq(gx) + sq(gy) + sq(gz);
 
     //Step 1: Yaw correction
-    if (useMag) 
-	{
-		const float magMagnitudeSq = mx * mx + my * my + mz * mz;
-		float kpMag = DCM_KP_MAG * imuMagFastPGainSaleFactor();
+    // if (useMag) 
+	// {
+	// 	const float magMagnitudeSq = mx * mx + my * my + mz * mz;
+	// 	float kpMag = DCM_KP_MAG * imuMagFastPGainSaleFactor();
 		
-		if (magMagnitudeSq > 0.01f) 
-		{
-			//单位化磁力计测量值
-			const float magRecipNorm = invSqrt(magMagnitudeSq);
-			mx *= magRecipNorm;
-			my *= magRecipNorm;
-			mz *= magRecipNorm;
+	// 	if (magMagnitudeSq > 0.01f) 
+	// 	{
+	// 		//单位化磁力计测量值
+	// 		const float magRecipNorm = invSqrt(magMagnitudeSq);
+	// 		mx *= magRecipNorm;
+	// 		my *= magRecipNorm;
+	// 		mz *= magRecipNorm;
 		
-			//计算X\Y方向的磁通，磁北方向磁通
-			const float hx = rMat[0][0] * mx + rMat[0][1] * my + rMat[0][2] * mz;
-			const float hy = rMat[1][0] * mx + rMat[1][1] * my + rMat[1][2] * mz;
-			const float bx = sqrtf(hx * hx + hy * hy);
+	// 		//计算X\Y方向的磁通，磁北方向磁通
+	// 		const float hx = rMat[0][0] * mx + rMat[0][1] * my + rMat[0][2] * mz;
+	// 		const float hy = rMat[1][0] * mx + rMat[1][1] * my + rMat[1][2] * mz;
+	// 		const float bx = sqrtf(hx * hx + hy * hy);
 
-			//磁力计误差是估计磁北和测量磁北之间的交叉乘积
-			const float ez_ef = -(hy * bx);
+	// 		//磁力计误差是估计磁北和测量磁北之间的交叉乘积
+	// 		const float ez_ef = -(hy * bx);
 
-			//旋转误差到机体坐标系
-			ex = rMat[2][0] * ez_ef;
-			ey = rMat[2][1] * ez_ef;
-			ez = rMat[2][2] * ez_ef;
-		}
-		else 
-		{
-			ex = 0;
-			ey = 0;
-			ez = 0;
-		}
+	// 		//旋转误差到机体坐标系
+	// 		ex = rMat[2][0] * ez_ef;
+	// 		ey = rMat[2][1] * ez_ef;
+	// 		ez = rMat[2][2] * ez_ef;
+	// 	}
+	// 	else 
+	// 	{
+	// 		ex = 0;
+	// 		ey = 0;
+	// 		ez = 0;
+	// 	}
 
-		//累计误差补偿
-		if (DCM_KI_MAG > 0.0f) 
-		{
-			//如果旋转速率大于限制值则停止积分
-			if (spin_rate_sq < sq(DEGREES_TO_RADIANS(SPIN_RATE_LIMIT))) 
-			{
-				integralMagX += DCM_KI_MAG * ex * dt;
-				integralMagY += DCM_KI_MAG * ey * dt;
-				integralMagZ += DCM_KI_MAG * ez * dt;
+	// 	//累计误差补偿
+	// 	if (DCM_KI_MAG > 0.0f) 
+	// 	{
+	// 		//如果旋转速率大于限制值则停止积分
+	// 		if (spin_rate_sq < sq(DEGREES_TO_RADIANS(SPIN_RATE_LIMIT))) 
+	// 		{
+	// 			integralMagX += DCM_KI_MAG * ex * dt;
+	// 			integralMagY += DCM_KI_MAG * ey * dt;
+	// 			integralMagZ += DCM_KI_MAG * ez * dt;
 
-				gx += integralMagX;
-				gy += integralMagY;
-				gz += integralMagZ;
-			}
-		}
+	// 			gx += integralMagX;
+	// 			gy += integralMagY;
+	// 			gz += integralMagZ;
+	// 		}
+	// 	}
 		
-		//误差补偿
-		gx += kpMag * ex;
-		gy += kpMag * ey;
-		gz += kpMag * ez;
-	}
+	// 	//误差补偿
+	// 	gx += kpMag * ex;
+	// 	gy += kpMag * ey;
+	// 	gz += kpMag * ez;
+	// }
 
 	
     //Step 2: Roll and pitch correction
@@ -229,6 +229,7 @@ static void imuMahonyAHRSupdate(float gx, float gy, float gz,
     gy *= (0.5f * dt);
     gz *= (0.5f * dt);
 
+ // 下面就是四元数的更新
     const float qa = q0;
     const float qb = q1;
     const float qc = q2;

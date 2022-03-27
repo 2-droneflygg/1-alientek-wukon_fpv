@@ -94,7 +94,7 @@ void rxTask(void *param)
 			}
 			
 			//处理解锁状态下遥控失去连接
-			if (ARMING_FLAG(ARMED))
+			if (ARMING_FLAG(ARMED)) //这是解锁的标志位
 			{
 				if (rcLinkState.linkState == false || rcLinkState.invalidPulse == true)//遥控失去连接或无效脉冲
 				{
@@ -102,7 +102,7 @@ void rxTask(void *param)
 					{
 						if (currentTick > failsafeState.throttleLowPeriod )//有一段低油门时间（如5秒），说明飞机在地上可直接关闭电机
 						{
-							mwDisarm();
+							mwDisarm(); // 啥意思，油门超过5秒低油门就自由落体了？ 不对，应该是解锁后，油门一直很低，超过5秒，突然遥控器失去连接 ，直接自动停桨叶
 						}
 						else 
 						{
@@ -112,8 +112,8 @@ void rxTask(void *param)
 					}
 				}
 				else//遥控连接正常
-				{
-					throttleStatus_e throttleStatus = calculateThrottleStatus();
+				{	// 遥控器如果失去了连接，油门值会自动到很小的值
+					throttleStatus_e throttleStatus = calculateThrottleStatus(); //如果持续的油门都是高的
 					if (throttleStatus == THROTTLE_HIGH)
 					{
 						failsafeState.throttleLowPeriod = currentTick + 5000;//5000表示需要低油门的时间（5秒）
