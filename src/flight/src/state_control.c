@@ -115,7 +115,7 @@ void stateControl(const sensorData_t *sensorData, const state_t *state, setpoint
 	if (RATE_DO_EXECUTE(POSITION_PID_RATE, tick))
 	{
 		//Z轴
-		if (setpoint->mode.z == modeAbs)
+		if (setpoint->mode.z == modeAbs)//绝对模式
 		{
 			setpoint->velocity.z = pidUpdate(&pid[POSHOLD_Z], setpoint->position.z - state->position.z);
 		}
@@ -126,7 +126,7 @@ void stateControl(const sensorData_t *sensorData, const state_t *state, setpoint
 	if (RATE_DO_EXECUTE(VELOCITY_PID_RATE, tick))
 	{
 		//Z轴
-		if (setpoint->mode.z != modeDisable)
+		if (setpoint->mode.z != modeDisable) 
 		{
 			altThrustAdj = pidUpdate(&pid[VELOCITY_Z], setpoint->velocity.z - state->velocity.z);
 			
@@ -140,10 +140,10 @@ void stateControl(const sensorData_t *sensorData, const state_t *state, setpoint
 	{
 		if (setpoint->mode.x == modeDisable || setpoint->mode.y == modeDisable) 
 		{
-			attitudeDesired.roll = setpoint->attitude.roll;
+			attitudeDesired.roll = setpoint->attitude.roll; //期望的角度
 			attitudeDesired.pitch = setpoint->attitude.pitch;
 		}
-		rateDesired.roll = pidUpdate(&pid[ANGLE_ROLL], attitudeDesired.roll - state->attitude.roll);
+		rateDesired.roll = pidUpdate(&pid[ANGLE_ROLL], attitudeDesired.roll - state->attitude.roll); //输出期望的角速度
 		rateDesired.pitch = pidUpdate(&pid[ANGLE_PITCH], attitudeDesired.pitch - state->attitude.pitch);
 		
 		if (setpoint->attitudeRate.yaw == 0)//yaw遥杆在中位
@@ -170,13 +170,13 @@ void stateControl(const sensorData_t *sensorData, const state_t *state, setpoint
 	if (RATE_DO_EXECUTE(RATE_PID_RATE, tick))
 	{
 		//速率模式则断开外环
-		if (setpoint->mode.roll == modeVelocity || setpoint->mode.pitch == modeVelocity)
-		{
-			rateDesired.roll = setpoint->attitudeRate.roll;
-			rateDesired.pitch = setpoint->attitudeRate.pitch;
-			pidReset(&pid[ANGLE_ROLL]);
-			pidReset(&pid[ANGLE_PITCH]);
-		}
+		// if (setpoint->mode.roll == modeVelocity || setpoint->mode.pitch == modeVelocity)
+		// {
+		// 	rateDesired.roll = setpoint->attitudeRate.roll;
+		// 	rateDesired.pitch = setpoint->attitudeRate.pitch;
+		// 	pidReset(&pid[ANGLE_ROLL]);
+		// 	pidReset(&pid[ANGLE_PITCH]);
+		// }
 		
 		//如果油门值小于MINCHECK时即怠速状态，清除PID积分，防止积分累计导致电机转速不一致
 		if(rcCommand[THROTTLE] <= RC_COMMANDER_MINCHECK)
@@ -195,7 +195,7 @@ void stateControl(const sensorData_t *sensorData, const state_t *state, setpoint
 	//油门
 	if (setpoint->mode.z == modeDisable)
 	{
-		control->thrust = setpoint->thrust;
+		control->thrust = setpoint->thrust; //油门的值 直接给到 控制的油门上
 	}
 	else
 	{

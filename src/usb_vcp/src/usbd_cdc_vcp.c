@@ -219,6 +219,7 @@ static uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
 //	  } 
 //  }
 	portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+  
 	for(int i=0; i<Len; i++)
 	{
 		uint8_t data = Buf[i];

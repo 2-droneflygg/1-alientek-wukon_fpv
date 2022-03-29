@@ -111,7 +111,7 @@ static void setupAltitudeHold(const state_t *state, setpoint_t *setpoint)
 //设定控制命令和飞行模式
 void commanderGetSetpoint(const state_t *state, setpoint_t *setpoint)
 {
-	if (autoLandState.autoLandActive != true)//正常飞行
+	if (autoLandState.autoLandActive != true) // 正常飞行
 	{
 		rcCommand[ROLL] = getAxisRcCommand(rcData[ROLL], DEAD_BAND);
 		rcCommand[PITCH] = getAxisRcCommand(rcData[PITCH], DEAD_BAND);
@@ -158,13 +158,13 @@ void commanderGetSetpoint(const state_t *state, setpoint_t *setpoint)
 	//手动模式和自稳模式
 	if (FLIGHT_MODE(ACRO_MODE))
 	{
-		setpoint->mode.roll = modeVelocity;
-		setpoint->mode.pitch = modeVelocity;
-		setpoint->mode.yaw = modeVelocity;
+		// setpoint->mode.roll = modeVelocity;
+		// setpoint->mode.pitch = modeVelocity;
+		// setpoint->mode.yaw = modeVelocity;
 		
-		setpoint->attitudeRate.roll = rcCommandToRate(rcCommand[ROLL], MAX_RATE_ROLL);
-		setpoint->attitudeRate.pitch = rcCommandToRate(rcCommand[PITCH], MAX_RATE_PITCH);
-		setpoint->attitudeRate.yaw = rcCommandToRate(rcCommand[YAW], MAX_RATE_YAW);
+		// setpoint->attitudeRate.roll = rcCommandToRate(rcCommand[ROLL], MAX_RATE_ROLL);
+		// setpoint->attitudeRate.pitch = rcCommandToRate(rcCommand[PITCH], MAX_RATE_PITCH);
+		// setpoint->attitudeRate.yaw = rcCommandToRate(rcCommand[YAW], MAX_RATE_YAW);
 	}
 	else if (FLIGHT_MODE(ANGLE_MODE))//目前主要看这个模式
 	{
@@ -176,38 +176,38 @@ void commanderGetSetpoint(const state_t *state, setpoint_t *setpoint)
 	}
 
 	//定高模式
-	if (FLIGHT_MODE(NAV_ALTHOLD_MODE))
-	{
-		static bool isAdjustAlttitude = false;
+	// if (FLIGHT_MODE(NAV_ALTHOLD_MODE))
+	// {
+	// 	static bool isAdjustAlttitude = false;
 		
-		//初始化定高模式
-		if (setupAltitudeHoldFlag == false)
-		{
-			setupAltitudeHold(state, setpoint);
-			setupAltitudeHoldFlag = true;
-		}
+	// 	//初始化定高模式
+	// 	if (setupAltitudeHoldFlag == false)
+	// 	{
+	// 		setupAltitudeHold(state, setpoint);
+	// 		setupAltitudeHoldFlag = true;
+	// 	}
 		
-		//调整设定高度
-		int16_t rcThrottleAdjustment = applyDeadband(rcCommand[THROTTLE] - altHoldThrottleBase, ALT_HOLD_DEADBAND);
-		if (rcThrottleAdjustment == 0 && isAdjustAlttitude == true)
-		{
-			setpoint->mode.z = modeAbs;
-			setpoint->position.z = state->position.z;
-			isAdjustAlttitude = false;
-		}
-		else if (rcThrottleAdjustment > 0)
-		{
-			setpoint->mode.z = modeVelocity;
-			setpoint->velocity.z = rcThrottleAdjustment * CLIMB_RATE_UP / (RC_MAX - altHoldThrottleBase - ALT_HOLD_DEADBAND);
-			isAdjustAlttitude = true;
-		}
-		else
-		{
-			setpoint->mode.z = modeVelocity;
-			setpoint->velocity.z = rcThrottleAdjustment * CLIMB_RATE_DOWN / (altHoldThrottleBase - RC_MIN - ALT_HOLD_DEADBAND);
-			isAdjustAlttitude = true;
-		}
-	}
+	// 	//调整设定高度
+	// 	int16_t rcThrottleAdjustment = applyDeadband(rcCommand[THROTTLE] - altHoldThrottleBase, ALT_HOLD_DEADBAND);
+	// 	if (rcThrottleAdjustment == 0 && isAdjustAlttitude == true)
+	// 	{
+	// 		setpoint->mode.z = modeAbs;
+	// 		setpoint->position.z = state->position.z;
+	// 		isAdjustAlttitude = false;
+	// 	}
+	// 	else if (rcThrottleAdjustment > 0)
+	// 	{
+	// 		setpoint->mode.z = modeVelocity;
+	// 		setpoint->velocity.z = rcThrottleAdjustment * CLIMB_RATE_UP / (RC_MAX - altHoldThrottleBase - ALT_HOLD_DEADBAND);
+	// 		isAdjustAlttitude = true;
+	// 	}
+	// 	else
+	// 	{
+	// 		setpoint->mode.z = modeVelocity;
+	// 		setpoint->velocity.z = rcThrottleAdjustment * CLIMB_RATE_DOWN / (altHoldThrottleBase - RC_MIN - ALT_HOLD_DEADBAND);
+	// 		isAdjustAlttitude = true;
+	// 	}
+	// }
 	
 	setpoint->thrust = rcCommand[THROTTLE];
 }

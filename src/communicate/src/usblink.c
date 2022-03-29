@@ -14,6 +14,8 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include "usart.h"
+
 /********************************************************************************	 
  * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
  * ATKflight飞控固件
@@ -94,7 +96,8 @@ void usblinkTxTask(void *param)
 		}
 		dataLen = p.dataLen + 5;
 		sendBuffer[dataLen - 1] = cksum;
-		usbsendData(sendBuffer, dataLen);
+		uart1_send_str(sendBuffer,dataLen);
+		//usbsendData(sendBuffer, dataLen);
 	}
 }
 
@@ -106,8 +109,9 @@ void usblinkRxTask(void *param)
 	u8 cksum = 0;
 	rxState = waitForStartByte1;
 	while(1)
-	{
-		if (usbGetDataWithTimout(&c))
+	{	
+		//if (usbGetDataWithTimout(&c))
+		if (usart1GetDataWithTimout(&c))
 		{
 			switch(rxState)
 			{

@@ -131,14 +131,14 @@ void uart1Getchar(char * ch)
 }
 
 /* USART1 中断服务函数 */
-void USART1_IRQHandler(void)	
-{
-	u8 rxData;
-	portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+// void USART1_IRQHandler(void)	
+// {
+// 	u8 rxData;
+// 	portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
-	if (USART_GetITStatus(USART1, USART_IT_RXNE))
-	{
-		rxData = USART_ReceiveData(USART1) & 0x00FF;
-		xQueueSendFromISR(uart1queue, &rxData, &xHigherPriorityTaskWoken);
-	}
-}
+// 	if (USART_GetITStatus(USART1, USART_IT_RXNE))
+// 	{
+// 		rxData = USART_ReceiveData(USART1) & 0x00FF;
+// 		xQueueSendFromISR(uart1queue, &rxData, &xHigherPriorityTaskWoken);
+// 	}
+// }

@@ -25,6 +25,13 @@ int main()
 
 	vTaskStartScheduler();	/*开启任务调度*/
 
+	// while (1)
+	// {
+	// 	delay_ms(1000);
+	// 	printf("test\r\n");/* code */
+	// }
+	
+
 	while(1){};
 }
 
@@ -49,13 +56,13 @@ void startTask(void *arg)
 	
 	xTaskCreate(atkpRxAnlTask, "ATKP_RX_ANL", 300, NULL, 3, NULL);		/*创建atkp解析任务*/
 	
-	xTaskCreate(beeperTask, "BEEPER", 200, NULL, 2, NULL);				/*创建蜂鸣器任务*/
+	//xTaskCreate(beeperTask, "BEEPER", 200, NULL, 2, NULL);				/*创建蜂鸣器任务*/
 	
 	xTaskCreate(pmTask, "PWRMGNT", 150, NULL, 1, NULL);					/*创建电源管理任务*/
 	
-	xTaskCreate(configParamTask, "CONFIG_TASK", 150, NULL, 1, NULL);	/*创建参数配置任务*/
+	//xTaskCreate(configParamTask, "CONFIG_TASK", 150, NULL, 1, NULL);	/*创建参数配置任务*/
 	
-	printf("Free heap: %d bytes\n", xPortGetFreeHeapSize());			/*打印剩余堆栈大小*/
+//	printf("Free heap: %d bytes\n", xPortGetFreeHeapSize());			/*打印剩余堆栈大小*/
 	
 	vTaskDelete(startTaskHandle);										/*删除开始任务*/
 

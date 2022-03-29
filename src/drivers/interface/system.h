@@ -33,6 +33,8 @@
 #include "imu.h"
 #include "ledstrip.h"
 
+#include "usart.h"
+
 void systemInit(void);
 
 #endif /* __SYSTEM_H */

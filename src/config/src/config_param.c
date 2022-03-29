@@ -104,32 +104,32 @@ void configParamInit(void)	/*参数配置初始化*/
 	lenth=sizeof(configParam);
 	lenth=lenth/4+(lenth%4 ? 1:0);
 
-	STMFLASH_Read(CONFIG_PARAM_ADDR, (u32 *)&configParam, lenth);
+	// STMFLASH_Read(CONFIG_PARAM_ADDR, (u32 *)&configParam, lenth);
 	
-	if (configParam.version == VERSION)	/*版本正确*/
-	{
-		if(configParamCksum(&configParam) == configParam.cksum)	/*校验正确*/
-		{
-			printf("Version V%1.1f check [OK]\r\n", configParam.version / 10.0f);
-			isConfigParamOK = true;
-		} else
-		{
-			printf("Version check [FAIL]\r\n");
-			isConfigParamOK = false;
-		}
-	}
-	else	/*版本更新*/
-	{
-		isConfigParamOK = false;
-	}
+	// if (configParam.version == VERSION)	/*版本正确*/
+	// {
+	// 	if(configParamCksum(&configParam) == configParam.cksum)	/*校验正确*/
+	// 	{
+	// 		printf("Version V%1.1f check [OK]\r\n", configParam.version / 10.0f);
+	// 		isConfigParamOK = true;
+	// 	} else
+	// 	{
+	// 		printf("Version check [FAIL]\r\n");
+	// 		isConfigParamOK = false;
+	// 	}
+	// }
+	// else	/*版本更新*/
+	// {
+	// 	isConfigParamOK = false;
+	// }
 	
-	if(isConfigParamOK == false)	/*配置参数错误，写入默认参数*/
-	{
+	// if(isConfigParamOK == false)	/*配置参数错误，写入默认参数*/
+	// {
 		memcpy((u8 *)&configParam, (u8 *)&configParamDefault, sizeof(configParam));
 		configParam.cksum = configParamCksum(&configParam);				/*计算校验值*/
-		STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*写入stm32 flash*/
+		//STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*写入stm32 flash*/
 		isConfigParamOK=true;
-	}	
+	//}	
 	
 	xSemaphore = xSemaphoreCreateBinary();
 	

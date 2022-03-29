@@ -145,62 +145,71 @@ void processRcAUXPositions(void)
 	}
 
 	//AUX3通道（三段开关）对应三个模式（自稳模式、定高模式、定点模式）
-	if(channelPos[AUX3] == AUX_LO)//自稳模式
-	{
-		if (!FLIGHT_MODE(ANGLE_MODE))
-			ENABLE_FLIGHT_MODE(ANGLE_MODE);
+	// if(channelPos[AUX3] == AUX_LO)//自稳模式
+	// {
+	// 	if (!FLIGHT_MODE(ANGLE_MODE))
+	// 		ENABLE_FLIGHT_MODE(ANGLE_MODE);
 		
-		if (FLIGHT_MODE(NAV_ALTHOLD_MODE))
-			DISABLE_FLIGHT_MODE(NAV_ALTHOLD_MODE);
+	// 	if (FLIGHT_MODE(NAV_ALTHOLD_MODE))
+	// 		DISABLE_FLIGHT_MODE(NAV_ALTHOLD_MODE);
 	
-		if (FLIGHT_MODE(NAV_POSHOLD_MODE))
-			DISABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
-	}
-	else if(channelPos[AUX3] == AUX_CE)//定高模式
-	{
-		if (!FLIGHT_MODE(NAV_ALTHOLD_MODE))
-		{
-			ENABLE_FLIGHT_MODE(NAV_ALTHOLD_MODE);
-			commanderSetupAltitudeHoldMode();
-		}
+	// 	if (FLIGHT_MODE(NAV_POSHOLD_MODE))
+	// 		DISABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
+	// }
+	// else if(channelPos[AUX3] == AUX_CE)//定高模式
+	// {
+	// 	if (!FLIGHT_MODE(NAV_ALTHOLD_MODE))
+	// 	{
+	// 		ENABLE_FLIGHT_MODE(NAV_ALTHOLD_MODE);
+	// 		commanderSetupAltitudeHoldMode();
+	// 	}
 		
-		if (FLIGHT_MODE(NAV_POSHOLD_MODE))
-			DISABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
-	}
-	else if(channelPos[AUX3] == AUX_HI)//定点模式
-	{
-		if (!FLIGHT_MODE(NAV_POSHOLD_MODE))
-			ENABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
-	}
+	// 	if (FLIGHT_MODE(NAV_POSHOLD_MODE))
+	// 		DISABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
+	// }
+	// else if(channelPos[AUX3] == AUX_HI)//定点模式
+	// {
+	// 	if (!FLIGHT_MODE(NAV_POSHOLD_MODE))
+	// 		ENABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
+	// }
 	
 	//AUX4通道（两段开关）对应两个模式（有头模式、无头模式）
-	if(channelPos[AUX4] == AUX_LO)
-	{
-		if (FLIGHT_MODE(HEADFREE_MODE))//有头模式
-			DISABLE_FLIGHT_MODE(HEADFREE_MODE);
-	}
-	else if(channelPos[AUX4] == AUX_HI)
-	{
-		if (!FLIGHT_MODE(HEADFREE_MODE))//无头模式
-			ENABLE_FLIGHT_MODE(HEADFREE_MODE);
-	}
+	// if(channelPos[AUX4] == AUX_LO)
+	// {
+	// 	if (FLIGHT_MODE(HEADFREE_MODE))//有头模式
+	// 		DISABLE_FLIGHT_MODE(HEADFREE_MODE);
+	// }
+	// else if(channelPos[AUX4] == AUX_HI)
+	// {
+	// 	if (!FLIGHT_MODE(HEADFREE_MODE))//无头模式
+	// 		ENABLE_FLIGHT_MODE(HEADFREE_MODE);
+	// }
 	
 	//AUX2通道（两段开关）打开和关闭蜂鸣器（炸机时寻机用）
-	if(channelPos[AUX2] == AUX_LO)
-	{
-		if (FLIGHT_MODE(BEEPER_ON_MODE))//关闭蜂鸣器
-			DISABLE_FLIGHT_MODE(BEEPER_ON_MODE);
-	}
-	else if(channelPos[AUX2] == AUX_HI)
-	{
-		if (!FLIGHT_MODE(BEEPER_ON_MODE))//打开蜂鸣器
-			ENABLE_FLIGHT_MODE(BEEPER_ON_MODE);
-	}
+	// if(channelPos[AUX2] == AUX_LO)
+	// {
+	// 	if (FLIGHT_MODE(BEEPER_ON_MODE))//关闭蜂鸣器
+	// 		DISABLE_FLIGHT_MODE(BEEPER_ON_MODE);
+	// }
+	// else if(channelPos[AUX2] == AUX_HI)
+	// {
+	// 	if (!FLIGHT_MODE(BEEPER_ON_MODE))//打开蜂鸣器
+	// 		ENABLE_FLIGHT_MODE(BEEPER_ON_MODE);
+	// }
 	
 	//AUX1通道（两段开关）紧急停机
 	if(channelPos[AUX1] == AUX_LO)
 	{
-		
+		DISABLE_FLIGHT_MODE(HEADFREE_MODE); //开启有头模式
+
+		if (!FLIGHT_MODE(ANGLE_MODE)) // 开启自稳模式
+		ENABLE_FLIGHT_MODE(ANGLE_MODE);
+
+		if (FLIGHT_MODE(NAV_ALTHOLD_MODE))
+		DISABLE_FLIGHT_MODE(NAV_ALTHOLD_MODE);
+
+		if (FLIGHT_MODE(NAV_POSHOLD_MODE))
+		DISABLE_FLIGHT_MODE(NAV_POSHOLD_MODE);
 	}
 	else if(channelPos[AUX1] == AUX_HI)
 	{
