@@ -60,7 +60,7 @@ void startTask(void *arg)
 	
 	xTaskCreate(pmTask, "PWRMGNT", 150, NULL, 1, NULL);					/*创建电源管理任务*/
 	
-	//xTaskCreate(configParamTask, "CONFIG_TASK", 150, NULL, 1, NULL);	/*创建参数配置任务*/
+//	xTaskCreate(configParamTask, "CONFIG_TASK", 150, NULL, 1, NULL);	/*创建参数配置任务*/
 	
 //	printf("Free heap: %d bytes\n", xPortGetFreeHeapSize());			/*打印剩余堆栈大小*/
 	

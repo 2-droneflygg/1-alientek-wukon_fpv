@@ -289,7 +289,7 @@ static void atkpSendPeriod(void)
 {
 	static u16 count_ms = 1;
 
-	if(!(count_ms % PERIOD_STATUS))
+	if(!(count_ms % PERIOD_SENSOR))
 	{
 		u8 fm = 0;
 		bool armed = ARMING_FLAG(ARMED);
@@ -299,31 +299,33 @@ static void atkpSendPeriod(void)
 			fm = 2;
 		if (FLIGHT_MODE(NAV_POSHOLD_MODE))
 			fm = 3;
-		sendStatus(state.attitude.roll, -state.attitude.pitch, -imuAttitudeYaw, state.position.z, fm, armed);				
+		//sendStatus(state.attitude.roll, -state.attitude.pitch, -imuAttitudeYaw, state.position.z, fm, armed);	
+		sendStatus(state.attitude.roll,setpoint.attitude.roll, -imuAttitudeYaw, state.position.z, fm, armed);				
 	}
-	if(!(count_ms % PERIOD_SENSOR))
-	{
-		sendSenser(accADC.x, accADC.y, accADC.z, gyroADC.x, gyroADC.y, gyroADC.z, magADC.x, magADC.y, magADC.z);				
-	}
-	if(!(count_ms % PERIOD_RCDATA))
-	{
-		sendRCData(	rcData[THROTTLE], rcData[YAW], rcData[ROLL],
-					rcData[PITCH], rcData[AUX1], rcData[AUX2],
-					rcData[AUX3], rcData[AUX4], rcData[AUX5], rcData[AUX6]);
-	}
-	if(!(count_ms % PERIOD_POWER))
-	{
-		float bat = pmGetBatteryVoltage();
-		sendPower(bat * 100,0);
-	}
-	if(!(count_ms % PERIOD_MOTOR))
-	{
-		sendMotorPWM(motorPWM.m1, motorPWM.m2, motorPWM.m3, motorPWM.m4, 0,0,0,0);
-	}
-	if(!(count_ms % PERIOD_SENSOR2))
-	{
-		sendSenser2(baroAltitude * 100, state.position.z);
-	}
+	// if(!(count_ms % PERIOD_SENSOR)) //传感器原始数据是 10ms 
+	// {
+	// 	sendSenser(accADC.x, accADC.y, accADC.z, gyroADC.x, gyroADC.y, gyroADC.z, magADC.x, magADC.y, magADC.z);				
+	// }
+	// if(!(count_ms % PERIOD_RCDATA))
+	// {
+	// 	sendRCData(	rcData[THROTTLE], rcData[YAW], rcData[ROLL],
+	// 				rcData[PITCH], rcData[AUX1], rcData[AUX2],
+	// 				rcData[AUX3], rcData[AUX4], rcData[AUX5], rcData[AUX6]);
+	// }
+	// if(!(count_ms % PERIOD_POWER))
+	// {
+	// 	float bat = pmGetBatteryVoltage();
+	// 	sendPower(bat * 100,0);
+	// }
+	// if(!(count_ms % PERIOD_MOTOR))
+	// {
+	// 	sendMotorPWM(motorPWM.m1, motorPWM.m2, motorPWM.m3, motorPWM.m4, 0,0,0,0);
+	// }
+	// if(!(count_ms % PERIOD_SENSOR2))
+	// {
+	// 	sendSenser2(baroAltitude * 100, state.position.z);
+	// }
+
 	if(++count_ms>=65535) 
 		count_ms = 1;	
 }
@@ -344,7 +346,7 @@ static u8 atkpCheckSum(atkp_t *packet)
 
 static void atkpReceiveAnl(atkp_t *anlPacket)
 {
-	if(anlPacket->msgID	== DOWN_COMMAND)
+	if(anlPacket->msgID	== DOWN_COMMAND)//上位机下发 命令 ，飞机需要执行对应的命令 ，但是飞机不返回数据
 	{
 		switch(anlPacket->data[0])
 		{
@@ -382,7 +384,7 @@ static void atkpReceiveAnl(atkp_t *anlPacket)
 				break;
 		}
 	}			
-	else if(anlPacket->msgID == DOWN_ACK)
+	else if(anlPacket->msgID == DOWN_ACK) // 上位机要求飞机把数据返回回来  比如pid数据
 	{
 		if(anlPacket->data[0] == D_ACK_READ_PID)/*读取PID参数*/
 		{
@@ -441,7 +443,7 @@ static void atkpReceiveAnl(atkp_t *anlPacket)
 				   );
 		}
 	}
-	else if(anlPacket->msgID == DOWN_PID1)
+	else if(anlPacket->msgID == DOWN_PID1) //上位机下发了 角速度 pid数据，飞机需要把数据保存下来
 	{
 		configParam.pid[RATE_ROLL].kp = ((s16)(*(anlPacket->data+0)<<8)|*(anlPacket->data+1));
 		configParam.pid[RATE_ROLL].ki = ((s16)(*(anlPacket->data+2)<<8)|*(anlPacket->data+3));
@@ -458,7 +460,7 @@ static void atkpReceiveAnl(atkp_t *anlPacket)
 		u8 cksum = atkpCheckSum(anlPacket);
 		sendCheck(anlPacket->msgID,cksum);
 	}
-	else if(anlPacket->msgID == DOWN_PID2)
+	else if(anlPacket->msgID == DOWN_PID2)//上位机下发了 角度 pid数据，飞机需要把数据保存下来
 	{
 		configParam.pid[ANGLE_ROLL].kp = ((s16)(*(anlPacket->data+0)<<8)|*(anlPacket->data+1));
 		configParam.pid[ANGLE_ROLL].ki = ((s16)(*(anlPacket->data+2)<<8)|*(anlPacket->data+3));
@@ -492,7 +494,7 @@ static void atkpReceiveAnl(atkp_t *anlPacket)
 		u8 cksum = atkpCheckSum(anlPacket);
 		sendCheck(anlPacket->msgID,cksum);
 	}
-	else if(anlPacket->msgID == DOWN_PID4)
+	else if(anlPacket->msgID == DOWN_PID4) // 位置保持pid数据 
 	{
 		configParam.pid[POSHOLD_XY].kp = ((s16)(*(anlPacket->data+0)<<8)|*(anlPacket->data+1));
 		configParam.pid[POSHOLD_XY].ki = ((s16)(*(anlPacket->data+2)<<8)|*(anlPacket->data+3));
@@ -501,7 +503,7 @@ static void atkpReceiveAnl(atkp_t *anlPacket)
 		u8 cksum = atkpCheckSum(anlPacket);
 		sendCheck(anlPacket->msgID,cksum);
 	}
-	else if(anlPacket->msgID == DOWN_PID5)
+	else if(anlPacket->msgID == DOWN_PID5) //这是校准的结果数据 不保存
 	{
 		u8 cksum = atkpCheckSum(anlPacket);
 		sendCheck(anlPacket->msgID,cksum);
@@ -519,7 +521,7 @@ static void atkpReceiveAnl(atkp_t *anlPacket)
 		sendCheck(anlPacket->msgID,cksum);
 		
 		stateControlInit();//初始化PID
-		saveConfigAndNotify();//保存PID至Flash
+		//saveConfigAndNotify();//保存PID至Flash  
 	}
 } 
 

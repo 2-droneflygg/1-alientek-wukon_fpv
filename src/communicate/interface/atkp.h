@@ -83,20 +83,23 @@ typedef enum
 /*下行指令ID*/
 typedef enum 
 {
-	DOWN_COMMAND	= 0x01,
-	DOWN_ACK		= 0x02,
-	DOWN_RCDATA		= 0x03,
-	DOWN_POWER		= 0x05,
-	DOWN_FLYMODE	= 0x0A,
-	DOWN_PID1		= 0x10,
-	DOWN_PID2		= 0x11,
-	DOWN_PID3		= 0x12,
+	DOWN_COMMAND	= 0x01, // 上位机下发命令 ，飞机需要执行对应的命令 ，但是飞机不返回数据
+	DOWN_ACK		= 0x02, // 上位机要求飞机把数据返回回来  比如pid数据
+
+	DOWN_RCDATA		= 0x03,// 没有用到
+	DOWN_POWER		= 0x05,// 没有用到
+	DOWN_FLYMODE	= 0x0A,// 没有用到
+
+//下面是上位机按下，写入飞控之后，自动下发所以的命令，飞机收到数据就要保存下来
+	DOWN_PID1		= 0x10, // 上位机下发了 角速度 pid数据，飞机需要把数据保存下来 并返回数据给上位机
+	DOWN_PID2		= 0x11, //上位机下发了 角度 pid数据，飞机需要把数据保存下来
+	DOWN_PID3		= 0x12, // 高度速率等
 	DOWN_PID4		= 0x13,
 	DOWN_PID5		= 0x14,
-	DOWN_PID6		= 0x15,
-	DOWN_RADIO		= 0x40,
-	
-	DOWN_REMOTER	= 0x50,
+	DOWN_PID6		= 0x15, //电机测试使用，
+
+	DOWN_RADIO		= 0x40,// 没有用到
+	DOWN_REMOTER	= 0x50,// 没有用到
 }downmsgID_e;
 
 

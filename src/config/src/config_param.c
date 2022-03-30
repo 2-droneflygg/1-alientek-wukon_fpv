@@ -37,12 +37,15 @@ static configParam_t configParamDefault=
 		[RATE_ROLL]   = {90, 900, 9},
 		[RATE_PITCH]  = {95, 1000, 10},
 		[RATE_YAW]    = {120, 800, 0},
+
 		[ANGLE_ROLL]  = {600, 0, 0},
 		[ANGLE_PITCH] = {600, 0, 0},
 		[ANGLE_YAW]   = {600, 0, 0},
+
 		[VELOCITY_Z]  = {150, 200, 50},
 		[POSHOLD_Z]   = {45, 0, 0},
 		[VELOCITY_XY] = {0, 0, 0},
+		
 		[POSHOLD_XY]  = {0, 0, 0},
 	},
 	.accBias= 	/*加速度校准值*/

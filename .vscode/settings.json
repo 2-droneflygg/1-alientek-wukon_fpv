@@ -5,6 +5,7 @@
         "uart1.h": "c",
         "usart.h": "c",
         "USART.H": "cpp",
-        "usbd_desc.h": "c"
+        "usbd_desc.h": "c",
+        "freertos.h": "c"
     }
 }
