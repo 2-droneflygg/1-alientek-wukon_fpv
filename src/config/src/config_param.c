@@ -34,8 +34,8 @@ static configParam_t configParamDefault=
 
 	.pid = 
 	{
-		[RATE_ROLL]   = {85, 900, 18},
-		[RATE_PITCH]  = {90, 1000, 18},
+		[RATE_ROLL]   = {90, 900, 9},
+		[RATE_PITCH]  = {95, 1000, 10},
 		[RATE_YAW]    = {120, 800, 0},
 		[ANGLE_ROLL]  = {600, 0, 0},
 		[ANGLE_PITCH] = {600, 0, 0},
@@ -49,15 +49,15 @@ static configParam_t configParamDefault=
 	{
 		.accZero = 
 		{
-			0,
-			0,
-			0,
+			-6,
+			111,
+			-351,
 		},
 		.accGain = 
 		{
-			4096,
-			4096,
-			4096,
+			4081,
+			4102,
+			4009,
 		}
 	},
 	.magBias=

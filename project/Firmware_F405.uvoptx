@@ -162,73 +162,153 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>20</LineNumber>
+          <LineNumber>117</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134272078</Address>
+          <Address>134268700</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\src\drivers\src\system.c</Filename>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Firmware_F405\../src/drivers/src/system.c\20</Expression>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\117</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>93</LineNumber>
+          <LineNumber>127</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134270994</Address>
+          <Address>134268736</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\src\flight\src\stabilizer.c</Filename>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Firmware_F405\../src/flight/src/stabilizer.c\93</Expression>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\127</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>28</LineNumber>
+          <LineNumber>137</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134272100</Address>
+          <Address>134268778</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\src\drivers\src\system.c</Filename>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Firmware_F405\../src/drivers/src/system.c\28</Expression>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\137</Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>182</LineNumber>
+          <LineNumber>98</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134230312</Address>
+          <Address>134268636</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\src\system\usart\usart.c</Filename>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Firmware_F405\../src/system/usart/usart.c\182</Expression>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\98</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>100</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134268642</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\100</Expression>
+        </Bp>
+        <Bp>
+          <Number>5</Number>
+          <Type>0</Type>
+          <LineNumber>59</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134254086</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\59</Expression>
+        </Bp>
+        <Bp>
+          <Number>6</Number>
+          <Type>0</Type>
+          <LineNumber>64</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134254096</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\64</Expression>
+        </Bp>
+        <Bp>
+          <Number>7</Number>
+          <Type>0</Type>
+          <LineNumber>69</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134254106</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\69</Expression>
+        </Bp>
+        <Bp>
+          <Number>8</Number>
+          <Type>0</Type>
+          <LineNumber>74</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134254116</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\src\fc\src\runtime_config.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Firmware_F405\../src/fc/src/runtime_config.c\74</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>setpoint</ItemText>
+          <ItemText>configParam,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
