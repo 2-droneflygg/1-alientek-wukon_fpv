@@ -21,15 +21,24 @@ int main()
 {
 	systemInit();			/*底层硬件初始化*/	
 
-	xTaskCreate(startTask, "START_TASK", 300, NULL, 2, &startTaskHandle);	/*创建起始任务*/
+	// xTaskCreate(startTask, "START_TASK", 300, NULL, 2, &startTaskHandle);	/*创建起始任务*/
 
-	vTaskStartScheduler();	/*开启任务调度*/
+	// vTaskStartScheduler();	/*开启任务调度*/
+	motorsSetRatio(0, 200);
+	motorsSetRatio(1, 300);
+	motorsSetRatio(2, 400);
+	motorsSetRatio(3, 500);
 
-	// while (1)
-	// {
-	// 	delay_ms(1000);
-	// 	printf("test\r\n");/* code */
-	// }
+	while (1)
+	{
+	
+		motorsSetRatio(0, 1200);
+		motorsSetRatio(1, 1300);
+		motorsSetRatio(2, 1400);
+		motorsSetRatio(3, 1500);
+		delay_ms(2);
+		
+	}
 	
 
 	while(1){};

@@ -19,18 +19,18 @@ void systemInit(void)
 {
 	nvicInit();			/*中断配置初始化*/
 	delay_init(168);	/*delay初始化*/
-	ledInit();			/*led初始化*/
-	ledStripInit();		/*初始化WS2812RGB灯*/
+	// ledInit();			/*led初始化*/
+	// ledStripInit();		/*初始化WS2812RGB灯*/
 	beeperInit();		/*蜂鸣器初始化*/
 
-	configParamInit();	/*初始化配置参数*/
+	// configParamInit();	/*初始化配置参数*/
 
-	pmInit();			/*电源电压管理初始化*/
-	rxInit();			/*遥控器ppm信号接收初始化*/
-	usblinkInit();		/*USB通信初始化*/
-	atkpInit();			/*传输协议初始化*/
-	consoleInit();		/*打印初始化*/
+	// pmInit();			/*电源电压管理初始化*/
+	// rxInit();			/*遥控器ppm信号接收初始化*/
+	// usblinkInit();		/*USB通信初始化*/
+	// atkpInit();			/*传输协议初始化*/
+	//consoleInit();		/*打印初始化*/
 	stabilizerInit();	/*电机 PID 姿态解算初始化*/
-	uart_init(460800);
+	//uart_init(460800);
 
 }

@@ -35,12 +35,12 @@ control_t 		control;	/*四轴控制参数*/
 
 void stabilizerInit(void)
 {
-	if(isInit) return;
+	//if(isInit) return;
 	
-	stateControlInit();		/*姿态PID初始化*/
+	//stateControlInit();		/*姿态PID初始化*/
 	powerControlInit();		/*电机初始化*/
-	imuInit();				/*姿态解算初始化*/
-	isInit = true;
+	//imuInit();				/*姿态解算初始化*/
+	//isInit = true;
 }
 
 void stabilizerTask(void* param)
