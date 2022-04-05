@@ -8,6 +8,7 @@
         "usbd_desc.h": "c",
         "freertos.h": "c",
         "motors.h": "c",
-        "pm.h": "c"
+        "pm.h": "c",
+        "runtime_config.h": "c"
     }
 }
